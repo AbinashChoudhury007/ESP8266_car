@@ -2,31 +2,31 @@
 #include <ESP8266WebServer.h>
 
 // Wi-Fi Credentials
-const char* ssid = "samannay";
-const char* password = "bapukantha1";
+const char *ssid = "Your wifi name";
+const char *password = " your wifi password";
 
 // HTTP Basic Auth Credentials
-const char* http_username = "admin";
-const char* http_password = "esp8266";
+const char *http_username = "admin";
+const char *http_password = "esp8266";
 
 // Create a web server on port 80
 ESP8266WebServer server(80);
 
 // LED Configuration
 const int ledPin = LED_BUILTIN; // Change to GPIO2 if using external LED
-//bool ledState = false;
+// bool ledState = false;
 
-
-//PIN CONFIGURATION FOR THE CAR BUTTONS
+// PIN CONFIGURATION FOR THE CAR BUTTONS
 const int leftPin = 5;
 const int rightPin = 4;
 const int forwardPin = 0;
 const int backwardPin = 2;
 
-
 // Handle the root page
-void handleRoot() {
-  if (!server.authenticate(http_username, http_password)) {
+void handleRoot()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
 
@@ -115,80 +115,89 @@ void handleRoot() {
 }
 
 // Handle turning the car LEFT
-void handleLeft() {
-  if (!server.authenticate(http_username, http_password)) {
+void handleLeft()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
-  digitalWrite(leftPin, HIGH); 
-  digitalWrite(rightPin,LOW);
-  digitalWrite(forwardPin,LOW);
-  digitalWrite(backwardPin,LOW);
+  digitalWrite(leftPin, HIGH);
+  digitalWrite(rightPin, LOW);
+  digitalWrite(forwardPin, LOW);
+  digitalWrite(backwardPin, LOW);
   server.send(200, "text/plain", "OK");
 }
 
 // Handle turning the car RIGHT
-void handleRight() {
-  if (!server.authenticate(http_username, http_password)) {
+void handleRight()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
-  digitalWrite(rightPin, HIGH); 
-  digitalWrite(leftPin,LOW);
-  digitalWrite(forwardPin,LOW);
-  digitalWrite(backwardPin,LOW);
+  digitalWrite(rightPin, HIGH);
+  digitalWrite(leftPin, LOW);
+  digitalWrite(forwardPin, LOW);
+  digitalWrite(backwardPin, LOW);
   server.send(200, "text/plain", "OK");
 }
 
-
-//MOVING FORWARD
-void handleForward() {
-  if (!server.authenticate(http_username, http_password)) {
+// MOVING FORWARD
+void handleForward()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
-  
-  digitalWrite(leftPin,HIGH);//5
-  digitalWrite(rightPin, LOW); //4
-  digitalWrite(forwardPin,HIGH);//0
-  digitalWrite(backwardPin,LOW);//2
+
+  digitalWrite(leftPin, HIGH);    // 5
+  digitalWrite(rightPin, LOW);    // 4
+  digitalWrite(forwardPin, HIGH); // 0
+  digitalWrite(backwardPin, LOW); // 2
   server.send(200, "text/plain", "OK");
 }
 
-//MOVING BACKWARD
-void handleBackward() {
-  if (!server.authenticate(http_username, http_password)) {
+// MOVING BACKWARD
+void handleBackward()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
-  
-  digitalWrite(leftPin,LOW); //5
-  digitalWrite(rightPin, HIGH); //4
-  digitalWrite(forwardPin,LOW);//0
-  digitalWrite(backwardPin,HIGH);//2
+
+  digitalWrite(leftPin, LOW);      // 5
+  digitalWrite(rightPin, HIGH);    // 4
+  digitalWrite(forwardPin, LOW);   // 0
+  digitalWrite(backwardPin, HIGH); // 2
   server.send(200, "text/plain", "OK");
 }
-
 
 // Handle turning the CAR OFF
-void handleOff() {
-  if (!server.authenticate(http_username, http_password)) {
+void handleOff()
+{
+  if (!server.authenticate(http_username, http_password))
+  {
     return server.requestAuthentication();
   }
-  digitalWrite(leftPin,LOW);
-  digitalWrite(rightPin,LOW);
-  digitalWrite(forwardPin,LOW);
-  digitalWrite(backwardPin,LOW);
+  digitalWrite(leftPin, LOW);
+  digitalWrite(rightPin, LOW);
+  digitalWrite(forwardPin, LOW);
+  digitalWrite(backwardPin, LOW);
   server.send(200, "text/plain", "OK");
 }
 
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-  pinMode(leftPin,OUTPUT);
-  pinMode(rightPin,OUTPUT);
-  pinMode(forwardPin,OUTPUT);
-  pinMode(backwardPin,OUTPUT);
-  
+  pinMode(leftPin, OUTPUT);
+  pinMode(rightPin, OUTPUT);
+  pinMode(forwardPin, OUTPUT);
+  pinMode(backwardPin, OUTPUT);
+
   WiFi.begin(ssid, password);
   Serial.print("Connecting to Wi-Fi");
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
@@ -208,6 +217,7 @@ void setup() {
   Serial.println("Web server started");
 }
 
-void loop() {
+void loop()
+{
   server.handleClient();
 }
