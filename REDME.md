@@ -1,7 +1,7 @@
 # Wifi controlled car through web browser
 
-<h3>Hi I'm </h3>
-<h1>Abinash Choudhury</h1>
+<h3>Hi We are  </h3>
+<h1>Abinash Choudhury , Mriganka Patowary</h1>
 
 <p>Microcontroller used:</p>
 <p>ESP8266</p>
